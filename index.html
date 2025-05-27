@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Situational Leadership Assessment</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --light: #ecf0f1;
+            --dark: #333;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        h1, h2, h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            box-shadow: 0 2px 10px rgba(44, 62, 80, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: #1a252f;
+            box-shadow: 0 4px 15px rgba(44, 62, 80, 0.4);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .progress-container {
+            margin: 30px 0;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: var(--light);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .question-container {
+            margin-bottom: 30px;
+        }
+        
+        .question-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .options-container {
+            margin: 20px 0;
+        }
+        
+        .option {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #eee;
+            background: #f9f9f9;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            background: #f1f1f1;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .option.selected {
+            background: #e3f2fd;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .option input {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .result-card {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .result-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .result-score {
+            font-size: 72px;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 20px 0;
+        }
+        
+        .result-description {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .scores-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        
+        .score-item {
+            text-align: center;
+            padding: 15px;
+            min-width: 150px;
+            margin: 10px;
+            border-radius: 8px;
+            background: #f5f5f5;
+        }
+        
+        .score-label {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .score-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .directing {
+            color: #e74c3c;
+        }
+        
+        .coaching {
+            color: #f39c12;
+        }
+        
+        .supporting {
+            color: #2ecc71;
+        }
+        
+        .delegating {
+            color: #3498db;
+        }
+        
+        .highlight {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .user-info {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .user-info-item {
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .scores-container {
+                flex-direction: column;
+            }
+            
+            .score-item {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="card">
+            <h1>Situational Leadership Assessment</h1>
+            <p>This assessment will help you identify your preferred leadership style based on how you would respond to different workplace situations.</p>
+            <p>There are 12 scenarios with multiple-choice responses. Select the option that best represents how you would handle each situation.</p>
+            
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" class="form-control" placeholder="Your Full Name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="staff-id">Staff ID:</label>
+                <input type="text" id="staff-id" class="form-control" placeholder="Your Staff ID" required>
+            </div>
+            
+            <button id="start-btn" class="btn btn-block">Begin Assessment</button>
+        </div>
+
+        <!-- Assessment Screen -->
+        <div id="assessment-screen" class="hidden">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progress" class="progress"></div>
+                </div>
+                <div class="progress-text" id="progress-text">Question 1 of 12</div>
+            </div>
+            
+            <div id="question-container" class="card">
+                <!-- Questions will be inserted here by JavaScript -->
+            </div>
+            
+            <div class="navigation">
+                <button id="prev-btn" class="btn btn-secondary">Previous</button>
+                <button id="next-btn" class="btn">Next</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="card hidden">
+            <div class="result-card">
+                <h2>Your Leadership Style Results</h2>
+                
+                <div class="user-info">
+                    <div class="user-info-item"><strong>Name:</strong> <span id="user-name"></span></div>
+                    <div class="user-info-item"><strong>Staff ID:</strong> <span id="user-staff-id"></span></div>
+                    <div class="user-info-item"><strong>Date:</strong> <span id="assessment-date"></span></div>
+                </div>
+                
+                <div class="result-title">Your Primary Leadership Style:</div>
+                <div class="result-score" id="primary-style"></div>
+                
+                <div class="result-description" id="style-description"></div>
+                
+                <h3 style="margin-top: 40px;">Your Style Breakdown</h3>
+                <div class="scores-container">
+                    <div class="score-item directing">
+                        <div class="score-label">Directing</div>
+                        <div class="score-value" id="directing-score">0</div>
+                    </div>
+                    <div class="score-item coaching">
+                        <div class="score-label">Coaching</div>
+                        <div class="score-value" id="coaching-score">0</div>
+                    </div>
+                    <div class="score-item supporting">
+                        <div class="score-label">Supporting</div>
+                        <div class="score-value" id="supporting-score">0</div>
+                    </div>
+                    <div class="score-item delegating">
+                        <div class="score-label">Delegating</div>
+                        <div class="score-value" id="delegating-score">0</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 40px;">
+                    <button id="restart-btn" class="btn">Take Assessment Again</button>
+                    <button id="print-btn" class="btn btn-secondary" style="margin-left: 10px;">Print Results</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Assessment data
+        const questions = [
+            {
+                situation: "Your group is not responding lately to your friendly conversation and obvious concern for their welfare. Their performance is declining rapidly.",
+                options: [
+                    { text: "Emphasize the use of uniform procedures and the necessity for task accomplishment.", style: "Directing" },
+                    { text: "Make yourself available for discussion but do not push your involvement.", style: "Supporting" },
+                    { text: "Talk with them and then set goals.", style: "Coaching" },
+                    { text: "Intentionally do not intervene.", style: "Delegating" }
+                ]
+            },
+            {
+                situation: "The observable performance of your group is increasing. You have been making sure that all members were aware of their responsibilities and expected standards of performance.",
+                options: [
+                    { text: "Engage in friendly interaction, but continue to make sure that all members are aware of their responsibilities and expected standards of performance.", style: "Coaching" },
+                    { text: "Take no definite action.", style: "Delegating" },
+                    { text: "Do what you can to make the group feel important and involved.", style: "Supporting" },
+                    { text: "Emphasize the importance of deadlines and tasks.", style: "Directing" }
+                ]
+            },
+            {
+                situation: "Members of your group are unable to solve a problem themselves. You have normally left them alone. Group performance and interpersonal relations have been good.",
+                options: [
+                    { text: "Work with the group and together engage in program solving.", style: "Directing" },
+                    { text: "Let the group work it out.", style: "Delegating" },
+                    { text: "Act quickly and firmly to correct and redirect.", style: "Directing" },
+                    { text: "Encourage the group to work on the problem and be supportive of their efforts.", style: "Supporting" }
+                ]
+            },
+            {
+                situation: "You are considering a change. Your group has a fine record of accomplishment. They respect the need for change.",
+                options: [
+                    { text: "Allow group involvement in developing the change, but do not be too directive.", style: "Supporting" },
+                    { text: "Announce changes and implement them with close supervision.", style: "Directing" },
+                    { text: "Allow the group to formulate its own directive.", style: "Delegating" },
+                    { text: "Incorporate group recommendations, but you direct the change.", style: "Coaching" }
+                ]
+            },
+            {
+                situation: "The performance of your group has been dropping during the last few months. Members have been unconcerned with meeting objectives. Redefining roles and responsibilities have helped in the past. They have continually needed reminding to have their tasks done on time.",
+                options: [
+                    { text: "Allow the group to formulate its own direction.", style: "Delegating" },
+                    { text: "Incorporate group recommendations, but see that objectives are met.", style: "Coaching" },
+                    { text: "Redefine roles and responsibilities and supervise carefully.", style: "Directing" },
+                    { text: "Allow group involvement in determining roles and responsibilities but do not be too directive.", style: "Supporting" }
+                ]
+            },
+            {
+                situation: "You stepped into an efficiently run group. The previous leader tightly controlled the situation. You want to maintain a productive situation, but would like to begin having more time building interpersonal relationships among members.",
+                options: [
+                    { text: "Do what you can do to make the group feel important and involved.", style: "Supporting" },
+                    { text: "Emphasize the importance of deadlines and tasks.", style: "Directing" },
+                    { text: "Intentionally do not intervene.", style: "Delegating" },
+                    { text: "Get the group involved in decision-making, but see that objectives are met.", style: "Coaching" }
+                ]
+            },
+            {
+                situation: "You are considering changing to a structure that will be new to your group. Members of the group have made suggestions about needed change. The group has been productive and demonstrated flexibility.",
+                options: [
+                    { text: "Define the change and supervise carefully.", style: "Directing" },
+                    { text: "Participate with the group in developing the change but allow members to organize the implementation.", style: "Supporting" },
+                    { text: "Be willing to make changes as recommended, but maintain control of the implementation.", style: "Coaching" },
+                    { text: "Be supportive in discussing the situation with the group but not too directive.", style: "Supporting" }
+                ]
+            },
+            {
+                situation: "Group performance and interpersonal relations are good. You feel somewhat unsure about your lack of direction in the group.",
+                options: [
+                    { text: "Leave the group alone.", style: "Delegating" },
+                    { text: "Discuss the situation with the group and then you initiate necessary changes.", style: "Supporting" },
+                    { text: "Redefine goals and supervise carefully.", style: "Directing" },
+                    { text: "Allow group involvement in setting goals, but don't push.", style: "Coaching" }
+                ]
+            },
+            {
+                situation: "You have been appointed to give leadership to a study group that is far overdue in making requested recommendations for change. The group is not clear on its goals. Attendance at sessions has been poor. Their meetings have turned into social gatherings. Potentially they have the talent necessary to help.",
+                options: [
+                    { text: "Let the group work out its problems.", style: "Delegating" },
+                    { text: "Incorporate group recommendations, but see that objectives are met.", style: "Coaching" },
+                    { text: "Redefine goals and supervise carefully.", style: "Directing" },
+                    { text: "Allow group involvement in setting goals, but do not push.", style: "Supporting" }
+                ]
+            },
+            {
+                situation: "Your group, usually able to take responsibility, is not responding to your recent redefining of job responsibilities as a result of one member leaving the city.",
+                options: [
+                    { text: "Allow group involvement in redefining standards but don't take control.", style: "Supporting" },
+                    { text: "Redefine standards and supervise carefully.", style: "Directing" },
+                    { text: "Avoid confrontation by not applying pressure, leave situation alone.", style: "Delegating" },
+                    { text: "Incorporate group recommendations, but see that new job responsibilities are met.", style: "Coaching" }
+                ]
+            },
+            {
+                situation: "You have been promoted to a leadership position. The previous leader was involved in the affairs of the group. The group has adequately handled its tasks and direction. Interpersonal relationships in the group are good.",
+                options: [
+                    { text: "Take steps to direct the group towards working in a well-defined manner.", style: "Directing" },
+                    { text: "Involve the group in decision-making and reinforce good contributions.", style: "Supporting" },
+                    { text: "Discuss past performance with the group and then you examine the need for new practice.", style: "Coaching" },
+                    { text: "Continue to leave the group alone.", style: "Delegating" }
+                ]
+            },
+            {
+                situation: "Recent information indicates some internal difficulties among group members. The group has a remarkable record of accomplishment. Members have effectively maintained long-range goals. They have worked in harmony for the past year. All are well qualified for the tasks.",
+                options: [
+                    { text: "Try out your solution with the group and examine the need for new procedures.", style: "Coaching" },
+                    { text: "Allow group members to work it out themselves.", style: "Delegating" },
+                    { text: "Act quickly and firmly to correct and redirect.", style: "Directing" },
+                    { text: "Participate in problem discussion while providing support for group members.", style: "Supporting" }
+                ]
+            }
+        ];
+
+        // DOM elements
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const assessmentScreen = document.getElementById('assessment-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const questionContainer = document.getElementById('question-container');
+        const progressBar = document.getElementById('progress');
+        const progressText = document.getElementById('progress-text');
+        const startBtn = document.getElementById('start-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const printBtn = document.getElementById('print-btn');
+        const userNameElement = document.getElementById('user-name');
+        const userStaffIdElement = document.getElementById('user-staff-id');
+        const assessmentDateElement = document.getElementById('assessment-date');
+        const primaryStyleElement = document.getElementById('primary-style');
+        const styleDescriptionElement = document.getElementById('style-description');
+
+        // Assessment state
+        let currentQuestion = 0;
+        let answers = [];
+        let userName = '';
+        let staffId = '';
+
+        // Initialize the assessment
+        function initAssessment() {
+            userName = document.getElementById('name').value.trim();
+            staffId = document.getElementById('staff-id').value.trim();
+            
+            if (!userName || !staffId) {
+                alert('Please enter both your name and staff ID to continue.');
+                return;
+            }
+
+            welcomeScreen.classList.add('hidden');
+            assessmentScreen.classList.remove('hidden');
+            answers = new Array(questions.length).fill(null);
+            currentQuestion = 0;
+            renderQuestion();
+        }
+
+        // Render the current question
+        function renderQuestion() {
+            const question = questions[currentQuestion];
+            const progressPercentage = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+
+            let html = `
+                <div class="question-container">
+                    <div class="question-text">${question.situation}</div>
+                    <div class="options-container">
+            `;
+
+            question.options.forEach((option, index) => {
+                const isSelected = answers[currentQuestion] === index ? 'selected' : '';
+                html += `
+                    <div class="option ${isSelected}" onclick="selectOption(${index})">
+                        <input type="radio" name="answer" value="${index}" ${answers[currentQuestion] === index ? 'checked' : ''}>
+                        ${option.text}
+                    </div>
+                `;
+            });
+
+            html += `</div></div>`;
+            questionContainer.innerHTML = html;
+
+            // Update button states
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Submit Assessment' : 'Next Question';
+        }
+
+        // Select an option
+        function selectOption(index) {
+            answers[currentQuestion] = index;
+            renderQuestion();
+        }
+
+        // Save the current answer
+        function saveAnswer() {
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            if (selectedOption) {
+                answers[currentQuestion] = parseInt(selectedOption.value);
+            }
+        }
+
+        // Navigate to the next question
+        function nextQuestion() {
+            saveAnswer();
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // Navigate to the previous question
+        function prevQuestion() {
+            saveAnswer();
+            currentQuestion--;
+            renderQuestion();
+        }
+
+        // Calculate and display results
+        function showResults() {
+            // Calculate scores
+            const scores = {
+                Directing: 0,
+                Coaching: 0,
+                Supporting: 0,
+                Delegating: 0
+            };
+
+            answers.forEach((answerIndex, questionIndex) => {
+                if (answerIndex !== null) {
+                    const style = questions[questionIndex].options[answerIndex].style;
+                    scores[style]++;
+                }
+            });
+
+            // Determine primary style
+            let primaryStyle = '';
+            let maxScore = 0;
+            
+            for (const [style, score] of Object.entries(scores)) {
+                if (score > maxScore) {
+                    maxScore = score;
+                    primaryStyle = style;
+                }
+            }
+
+            // Update results screen
+            userNameElement.textContent = userName;
+            userStaffIdElement.textContent = staffId;
+            
+            // Add current date
+            const today = new Date();
+            assessmentDateElement.textContent = today.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            primaryStyleElement.textContent = primaryStyle;
+            primaryStyleElement.className = `result-score ${primaryStyle.toLowerCase()}`;
+            
+            document.getElementById('directing-score').textContent = scores.Directing;
+            document.getElementById('coaching-score').textContent = scores.Coaching;
+            document.getElementById('supporting-score').textContent = scores.Supporting;
+            document.getElementById('delegating-score').textContent = scores.Delegating;
+
+            // Add style description
+            const styleDescriptions = {
+                "Directing": `As a <span class="highlight">Directing</span> leader, you provide specific instructions and closely supervise tasks. This style works best with team members who are both inexperienced and unconfident in their abilities. You clearly tell people what to do, how to do it, and when to complete it. You provide specific direction and closely monitor performance.`,
+                "Coaching": `As a <span class="highlight">Coaching</span> leader, you explain decisions and provide opportunity for clarification. This style works well with team members who have some competence but may lack confidence. You still provide direction but also seek input and encourage two-way communication. You support your team's efforts while maintaining decision-making control.`,
+                "Supporting": `As a <span class="highlight">Supporting</span> leader, you facilitate and support subordinates' efforts. This style is effective with team members who have competence but may lack confidence or motivation. You share decision-making with your team and focus on building relationships and encouraging participation. You provide less direction and more support.`,
+                "Delegating": `As a <span class="highlight">Delegating</span> leader, you turn over responsibility for decision-making and problem-solving. This style works best with highly competent and confident team members who are motivated to do good work. You provide little direction or support as team members are capable and willing to take responsibility for completing tasks.`
+            };
+
+            styleDescriptionElement.innerHTML = styleDescriptions[primaryStyle];
+
+            // Show results
+            assessmentScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        }
+
+        // Print results
+        function printResults() {
+            const printContents = resultsScreen.innerHTML;
+            const originalContents = document.body.innerHTML;
+            
+            document.body.innerHTML = `
+                <style>
+                    body { font-family: Arial, sans-serif; padding: 20px; }
+                    .result-card { max-width: 800px; margin: 0 auto; }
+                    .user-info { background: #f5f5f5; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+                    .result-title { font-size: 24px; color: #3498db; margin: 20px 0 10px; }
+                    .result-score { font-size: 72px; font-weight: bold; color: #2c3e50; margin: 20px 0; }
+                    .result-description { background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0; }
+                    .scores-container { display: flex; justify-content: space-around; margin: 30px 0; }
+                    .score-item { text-align: center; padding: 15px; min-width: 150px; margin: 10px; border-radius: 8px; background: #f5f5f5; }
+                    .directing { color: #e74c3c; }
+                    .coaching { color: #f39c12; }
+                    .supporting { color: #2ecc71; }
+                    .delegating { color: #3498db; }
+                    .highlight { font-weight: bold; color: #3498db; }
+                    @media print {
+                        button { display: none; }
+                    }
+                </style>
+                ${printContents}
+                <div style="text-align: center; margin-top: 30px;">
+                    <button onclick="window.print()" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Print</button>
+                    <button onclick="window.close()" style="padding: 10px 20px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">Close</button>
+                </div>
+            `;
+            
+            window.print();
+            document.body.innerHTML = originalContents;
+            renderQuestion();
+        }
+
+        // Restart the assessment
+        function restartAssessment() {
+            resultsScreen.classList.add('hidden');
+            welcomeScreen.classList.remove('hidden');
+            document.getElementById('name').value = '';
+            document.getElementById('staff-id').value = '';
+        }
+
+        // Make selectOption function available globally
+        window.selectOption = selectOption;
+
+        // Event listeners
+        startBtn.addEventListener('click', initAssessment);
+        nextBtn.addEventListener('click', nextQuestion);
+        prevBtn.addEventListener('click', prevQuestion);
+        restartBtn.addEventListener('click', restartAssessment);
+        printBtn.addEventListener('click', printResults);
+    </script>
+</body>
+</html>
